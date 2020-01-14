@@ -28,7 +28,7 @@ router.get("/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   if (!req.body.contents || !req.body.title) {
-    res.status(404).json({ message: "please enter titile and contents" });
+    res.status(404).json({ message: "please enter title and contents" });
   } else {
     Posts.insert(req.body)
       .then(posts => {
@@ -36,6 +36,20 @@ router.post("/", (req, res) => {
       })
       .catch(err => {
         res.status(500).json({ message: "something went wrong" });
+      });
+  }
+});
+
+router.put("/:id", (req, res) => {
+  if (!req.body.title || !req.body.contents) {
+    res.status(404).json({ meassage: "both contents and title are required." });
+  } else {
+    Posts.update(req.params.id, req.body)
+      .then(posts => {
+        res.status(204).json(posts);
+      })
+      .catch(err => {
+        res.status(500).json({ message: "something went wdrong" });
       });
   }
 });
