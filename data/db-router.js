@@ -54,4 +54,14 @@ router.put("/:id", (req, res) => {
   }
 });
 
+router.delete("/:id", (req, res) => {
+  Posts.remove(req.params.id)
+    .then(deleted => {
+      res.status(200).json(deleted);
+    })
+    .catch(err => {
+      res.status(500).json({ message: "something went wrong" });
+    });
+});
+
 module.exports = router;
